@@ -1,6 +1,3 @@
-console.log("SCRIPT LOADED");
-
-
 function startTracking() {
     const deviceId = Number(document.getElementById("deviceId").value);
 
@@ -9,28 +6,35 @@ function startTracking() {
         return;
     }
 
-    const data = {
-        deviceId: deviceId,
-        latitude: 28.6139,
-        longitude: 77.2090
-    };
+    if (!navigator.geolocation) {
+        alert("Geolocation not supported");
+        return;
+    }
 
-    console.log("Sending:", JSON.stringify(data));
+    navigator.geolocation.getCurrentPosition(function(position) {
 
-    fetch("http://localhost:8080/update", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    })
-    .then(res => {
-        console.log("Status:", res.status);
-        return res.json();
-    })
-    .then(response => {
-        console.log("Response:", response.status);
-        alert("Device is " + response.status);
-    })
-    .catch(err => console.error(err));
+        const data = {
+            deviceId: deviceId,
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+        };
+
+        console.log("Sending:", JSON.stringify(data));
+
+        fetch("http://localhost:8080/update", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(response => {
+            alert("Device is " + response.status);
+        })
+        .catch(err => console.error(err));
+
+    }, function(error) {
+        console.error("Location error:", error);
+    });
 }

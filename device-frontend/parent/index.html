@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GeoFence Parent Setup</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<div class="wizard-container">
+
+    <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+
+    <!-- Step 1 -->
+    <div class="step active" id="step1">
+        <h2>Register Parent</h2>
+        <input type="text" id="parentName" placeholder="Name" required>
+        <input type="email" id="parentEmail" placeholder="Email" required>
+        <button onclick="registerParent()">Next</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step2">
+        <h2>Register Device</h2>
+        <input type="text" id="deviceName" placeholder="Device Name" required>
+        <button onclick="registerDevice()">Next</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" id="step3">
+    <h2>Set Geofence</h2>
+
+    <input type="text" id="geoName" placeholder="Geofence Name" required>
+    <input type="number" id="radius" placeholder="Radius (meters)" value="200">
+
+    <div id="map"></div>
+
+    <input type="hidden" id="latitude">
+    <input type="hidden" id="longitude">
+
+    <button onclick="setGeofence()">Finish Setup</button>
+</div>
+
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>

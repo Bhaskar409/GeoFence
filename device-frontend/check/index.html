@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>GeoFence Setup</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+
+<div class="noise"></div>
+
+<div class="wizard-wrapper">
+
+    <div class="wizard-header">
+        <div class="logo-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            </svg>
+        </div>
+        <h1>GeoFence Setup</h1>
+        <p>Configure parental location monitoring in minutes</p>
+    </div>
+
+    <!-- Step indicator -->
+    <div class="steps-indicator">
+        <div class="step-dot active" id="dot1">
+            <div class="dot">1</div>
+            <span class="label">Parent</span>
+        </div>
+        <div class="step-connector" id="conn1"><div class="fill"></div></div>
+        <div class="step-dot" id="dot2">
+            <div class="dot">2</div>
+            <span class="label">Device</span>
+        </div>
+        <div class="step-connector" id="conn2"><div class="fill"></div></div>
+        <div class="step-dot" id="dot3">
+            <div class="dot">3</div>
+            <span class="label">Fence</span>
+        </div>
+    </div>
+
+    <div class="wizard-card">
+
+        <!-- Step 1 -->
+        <div class="step active" id="step1">
+            <div class="step-title">Register Parent</div>
+            <div class="step-subtitle">Create your guardian account to get started</div>
+
+            <div class="field">
+                <label>Full Name</label>
+                <input type="text" id="parentName" placeholder="e.g. Sarah Johnson">
+            </div>
+            <div class="field">
+                <label>Email Address</label>
+                <input type="email" id="parentEmail" placeholder="sarah@example.com">
+            </div>
+
+            <button class="btn-primary" onclick="registerParent()">
+                Continue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step" id="step2">
+            <div class="step-title">Add Device</div>
+            <div class="step-subtitle">Register the child's device to monitor</div>
+
+            <div class="field">
+                <label>Device Name</label>
+                <input type="text" id="deviceName" placeholder="e.g. Emma's iPhone">
+            </div>
+
+            <button class="btn-primary" onclick="registerDevice()">
+                Continue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step" id="step3">
+            <div class="step-title">Set Geofence</div>
+            <div class="step-subtitle">Click the map to place your safe zone boundary</div>
+
+            <div class="field-row">
+                <div class="field">
+                    <label>Zone Name</label>
+                    <input type="text" id="geoName" placeholder="Home, School...">
+                </div>
+                <div class="field">
+                    <label>Radius (m)</label>
+                    <input type="number" id="radius" value="200" min="50" max="5000">
+                </div>
+            </div>
+
+            <div id="map"></div>
+
+            <div class="map-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                Tap anywhere on the map to drop the geofence center
+            </div>
+
+            <div class="coords-display">
+                <div class="coord-pill">
+                    <div class="coord-label">Latitude</div>
+                    <div class="coord-value" id="latDisplay">-</div>
+                </div>
+                <div class="coord-pill">
+                    <div class="coord-label">Longitude</div>
+                    <div class="coord-value" id="lngDisplay">-</div>
+                </div>
+            </div>
+
+            <input type="hidden" id="latitude">
+            <input type="hidden" id="longitude">
+
+            <button class="btn-primary" onclick="setGeofence()">
+                Finish Setup
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script src="index.js"></script>
+</body>
+</html>

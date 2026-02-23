@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoFence Device Simulator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="grid-bg"></div>
+
+    <div class="wrapper">
+        <div class="card">
+
+            <div class="card-header">
+                <div class="ping-dot"></div>
+                <span class="label">SYS — GEOFENCE v2.0</span>
+            </div>
+
+            <h1 class="title">Device<br><span class="accent">Simulator</span></h1>
+            <p class="subtitle">Broadcast your geolocation to the tracking server.</p>
+
+            <div class="input-group">
+                <label for="deviceId" class="input-label">DEVICE ID</label>
+                <div class="input-wrap">
+                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    <input type="text" id="deviceId" placeholder="e.g. 10421" autocomplete="off">
+                </div>
+            </div>
+
+            <button class="btn" onclick="startTracking()">
+                <span class="btn-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+                    Start Tracking
+                </span>
+                <div class="btn-glow"></div>
+            </button>
+
+            <div id="status" class="status hidden">
+                <div class="status-dot"></div>
+                <span id="statusText"></span>
+            </div>
+
+        </div>
+
+        <div class="coords-display hidden" id="coordsDisplay">
+            <div class="coord-item">
+                <span class="coord-label">LAT</span>
+                <span class="coord-value" id="latVal">—</span>
+            </div>
+            <div class="coord-divider"></div>
+            <div class="coord-item">
+                <span class="coord-label">LNG</span>
+                <span class="coord-value" id="lngVal">—</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

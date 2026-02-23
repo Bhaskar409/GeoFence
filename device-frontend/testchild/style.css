@@ -1,0 +1,378 @@
+/* ─── Reset & Base ────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+    --bg: #080b10;
+    --surface: #0e1520;
+    --border: #1c2840;
+    --accent: #00e5ff;
+    --accent-dim: rgba(0, 229, 255, 0.12);
+    --accent-glow: rgba(0, 229, 255, 0.35);
+    --text: #c8d8f0;
+    --text-muted: #4a6080;
+    --danger: #ff4560;
+    --success: #00e096;
+    --font-mono: 'Space Mono', monospace;
+    --font-display: 'Syne', sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* ─── Grid Background ─────────────────────────────────────────── */
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.grid-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 40%, var(--bg) 100%);
+}
+
+/* ─── Layout ──────────────────────────────────────────────────── */
+.wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+    animation: fadeUp 0.6s ease both;
+}
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Card ────────────────────────────────────────────────────── */
+.card {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0.6;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.ping-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s infinite;
+    flex-shrink: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent); }
+    50%       { opacity: 0.5; box-shadow: 0 0 3px var(--accent); }
+}
+
+.label {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* ─── Title ───────────────────────────────────────────────────── */
+.title {
+    font-family: var(--font-display);
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.title .accent {
+    color: var(--accent);
+    text-shadow: 0 0 24px var(--accent-glow);
+}
+
+.subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 32px;
+}
+
+/* ─── Input ───────────────────────────────────────────────────── */
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-label {
+    display: block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.input-wrap {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    pointer-events: none;
+}
+
+input[type="text"] {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 14px 14px 42px;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    caret-color: var(--accent);
+}
+
+input[type="text"]::placeholder { color: var(--text-muted); }
+
+input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim), inset 0 0 0 1px var(--accent);
+}
+
+/* ─── Button ──────────────────────────────────────────────────── */
+.btn {
+    width: 100%;
+    position: relative;
+    background: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 15px 20px;
+    cursor: pointer;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.2s;
+    margin-bottom: 20px;
+}
+
+.btn-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+}
+
+.btn-glow {
+    position: absolute;
+    inset: 0;
+    background: var(--accent-dim);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.btn:hover { transform: translateY(-1px); box-shadow: 0 4px 24px var(--accent-glow); }
+.btn:hover .btn-glow { opacity: 1; }
+.btn:active { transform: translateY(0); box-shadow: none; }
+
+.btn.loading .btn-inner svg {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* ─── Status ──────────────────────────────────────────────────── */
+.status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent-dim);
+    border: 1px solid rgba(0, 229, 255, 0.2);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--text);
+    animation: fadeIn 0.3s ease;
+    transition: all 0.3s;
+}
+
+.status.error {
+    background: rgba(255, 69, 96, 0.1);
+    border-color: rgba(255, 69, 96, 0.3);
+}
+
+.status.success {
+    background: rgba(0, 224, 150, 0.1);
+    border-color: rgba(0, 224, 150, 0.3);
+}
+
+.status-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+    box-shadow: 0 0 6px var(--accent);
+}
+
+.status.error .status-dot   { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+.status.success .status-dot { background: var(--success); box-shadow: 0 0 6px var(--success); }
+
+.hidden { display: none !important; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Coords Display ──────────────────────────────────────────── */
+.coords-display {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    animation: fadeIn 0.4s ease both;
+}
+
+.coord-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+}
+
+.coord-label {
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+}
+
+.coord-value {
+    font-size: 13px;
+    color: var(--accent);
+    font-family: var(--font-mono);
+}
+
+.coord-divider {
+    width: 1px;
+    height: 36px;
+    background: var(--border);
+    margin: 0 16px;
+}
+
+/* ─── Background Status ───────────────────────────────────────── */
+body {
+    transition: background-color 0.8s ease;
+}
+
+body.status-inside {
+    --accent: #00e096;
+    --accent-dim: rgba(0, 224, 150, 0.12);
+    --accent-glow: rgba(0, 224, 150, 0.35);
+    background-color: #021a0e;
+}
+
+body.status-inside .grid-bg {
+    background-image:
+        linear-gradient(rgba(0, 224, 150, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 224, 150, 0.06) 1px, transparent 1px);
+}
+
+body.status-inside::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    animation: glowPulseGreen 2.5s ease-in-out infinite;
+}
+
+body.status-outside {
+    --accent: #ff4560;
+    --accent-dim: rgba(255, 69, 96, 0.12);
+    --accent-glow: rgba(255, 69, 96, 0.35);
+    background-color: #1a0205;
+}
+
+body.status-outside .grid-bg {
+    background-image:
+        linear-gradient(rgba(255, 69, 96, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 69, 96, 0.06) 1px, transparent 1px);
+}
+
+body.status-outside::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    animation: glowPulseRed 2.5s ease-in-out infinite;
+}
+
+@keyframes glowPulseGreen {
+    0%, 100% { box-shadow: inset 0 0 120px 40px rgba(0, 200, 100, 0.2); }
+    50%       { box-shadow: inset 0 0 180px 60px rgba(0, 200, 100, 0.35); }
+}
+
+@keyframes glowPulseRed {
+    0%, 100% { box-shadow: inset 0 0 120px 40px rgba(220, 30, 60, 0.25); }
+    50%       { box-shadow: inset 0 0 180px 60px rgba(220, 30, 60, 0.4); }
+}
+

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parent Notification</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 20px;
+        }
+
+        .status {
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .connected {
+            color: green;
+        }
+
+        .disconnected {
+            color: red;
+        }
+
+        .notification {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+<h2>GeoFence Parent Notifications</h2>
+
+<div id="connectionStatus" class="status disconnected">
+    Disconnected
+</div>
+
+<div id="notifications"></div>
+
+<script>
+
+    const parentId = 1;
+
+    const eventSource = new EventSource(
+        "http://localhost:8080/notifications/subscribe/" + parentId
+    );
+
+    const statusDiv = document.getElementById("connectionStatus");
+    const notificationDiv = document.getElementById("notifications");
+
+    eventSource.onopen = function () {
+        statusDiv.innerHTML = "Connected";
+        statusDiv.className = "status connected";
+        console.log("SSE Connected");
+    };
+
+    eventSource.onerror = function () {
+        statusDiv.innerHTML = "Disconnected";
+        statusDiv.className = "status disconnected";
+        console.log("SSE Error");
+    };
+
+    // Ignore INIT event
+    eventSource.addEventListener("INIT", function (event) {
+        console.log("Handshake:", event.data);
+    });
+
+    eventSource.addEventListener("notification", function (event) {
+
+        console.log("Raw Event:", event.data);
+
+        let data;
+        try {
+            data = JSON.parse(event.data);
+        } catch (e) {
+            console.error("Invalid JSON:", event.data);
+            return;
+        }
+
+        const div = document.createElement("div");
+        div.className = "notification";
+
+        div.innerHTML = `
+            <strong>Device:</strong> ${data.deviceId} <br>
+            <strong>Event:</strong> ${data.eventType} <br>
+            <strong>Message:</strong> ${data.message} <br>
+            <strong>Latitude:</strong> ${data.latitude} <br>
+            <strong>Longitude:</strong> ${data.longitude} <br>
+            <strong>Time:</strong> ${data.createdAt}
+        `;
+
+        notificationDiv.prepend(div);
+
+    });
+
+</script>
+
+</body>
+</html>

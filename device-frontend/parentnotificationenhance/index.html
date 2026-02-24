@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoFence Guardian</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="app-name">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/>
+      <circle cx="12" cy="10" r="3"/>
+    </svg>
+    GeoFence Guardian
+  </div>
+  <div class="header-right">
+    <div class="status-badge" id="statusBadge">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Live Connected</span>
+    </div>
+    <div class="parent-name">
+      👤 <span id="parentName">P.S.</span>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- STATUS CARD -->
+  <div class="status-card inside" id="statusCard">
+    <div class="card-header">
+      <div class="card-header-title">📍 Current Status</div>
+      <div class="device-label" id="deviceLabel">Device A</div>
+    </div>
+    <div class="card-body">
+      <div class="status-main">
+        <div class="status-icon inside" id="statusIcon">✅</div>
+        <div class="status-text-block">
+          <div class="status-label">Zone Status</div>
+          <div class="status-value inside" id="statusValue">INSIDE SAFE ZONE</div>
+        </div>
+      </div>
+      <div class="status-meta">
+        <div class="meta-item">
+          <div class="meta-key">Last Updated</div>
+          <div class="meta-val" id="lastUpdated">—</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-key">Event</div>
+          <div class="meta-val" id="lastEvent">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATION FEED -->
+  <div class="feed-section">
+    <div class="feed-header">
+      <div class="feed-title">
+        🔔 Live Notifications
+        <span class="feed-count" id="feedCount">0</span>
+      </div>
+      <button class="feed-clear" onclick="clearFeed()">Clear all</button>
+    </div>
+    <div class="feed-list" id="feedList">
+      <div class="feed-empty" id="feedEmpty">No notifications yet. Waiting for events…</div>
+    </div>
+  </div>
+
+  <!-- DEMO CONTROLS -->
+  <div class="demo-bar">
+    <span class="demo-label">Simulate SSE →</span>
+    <button class="demo-btn green" onclick="simulateEvent('enter')">Device ENTERED</button>
+    <button class="demo-btn red" onclick="simulateEvent('exit')">Device EXITED</button>
+    <button class="demo-btn blue" onclick="toggleConnection()">Toggle Connection</button>
+  </div>
+
+</main>
+
+<script src="index.js"></script>
+</body>
+</html>
